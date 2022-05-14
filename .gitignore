@@ -84,3 +84,5 @@ DerivedDataCache/*
 # Annoying windows files
 [Dd]esktop.ini
 [Tt]humbs.db
+
+Config/HoloLens/*
