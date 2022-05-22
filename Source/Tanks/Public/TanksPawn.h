@@ -7,7 +7,10 @@
 #include "GameFramework/Pawn.h"
 #include "TanksPawn.generated.h"
 
+class UTanksHealthWidgetComponent;
+class UTanksAttributeComponent;
 class ATanksTurret;
+
 /** Base pawn for player and AI controller*/
 UCLASS(Abstract)
 class TANKS_API ATanksPawn : public APawn
@@ -18,25 +21,38 @@ public:
 	ATanksPawn(const FObjectInitializer& ObjectInitializer);
 
 	virtual void BeginPlay() override;
-protected:
-	virtual void MoveForward(float Value);
 
+protected:
+	virtual void LoadoutTurret();
+
+	virtual void MoveForward(float Value);
 	virtual void MoveRight(float Value);
 
-	virtual void LoadoutTurret();
+	virtual void StartFire();
+	virtual void StopFire();
+
+	UFUNCTION()
+	void OnTakeDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, FVector Origin, FHitResult HitInfo, class AController* InstigatedBy, AActor* DamageCauser);
+
 protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scene Components")
+	UBoxComponent* BoxCollisionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scene Components")
+	UStaticMeshComponent* StaticMeshChassis;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scene Components")
+	ATanksTurret* Turret;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	UPawnMovementComponent* PawnMovementComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
-	UBoxComponent* BoxCollisionComponent;
+	UTanksAttributeComponent* AttributeComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
-	UStaticMeshComponent* StaticMeshChassis;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
-	ATanksTurret* Turret;
-
+	UTanksHealthWidgetComponent* HealthWidgetComponent;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
 	TSubclassOf<ATanksTurret> TurretClass;
 };

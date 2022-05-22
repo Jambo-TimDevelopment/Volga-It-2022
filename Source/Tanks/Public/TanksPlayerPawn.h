@@ -24,6 +24,9 @@ protected:
 	virtual void MoveForward(float Value) override;
 	virtual void MoveRight(float Value) override;
 
+	virtual void StartFire() override;
+	virtual void StopFire() override;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="TanksPlayerPawn")
 	UCameraComponent* CameraComponent;

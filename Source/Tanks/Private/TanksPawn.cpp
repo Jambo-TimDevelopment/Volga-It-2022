@@ -2,6 +2,8 @@
 
 
 #include "TanksPawn.h"
+#include "TanksAttributeComponent.h"
+#include "TanksHealthWidgetComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "TanksTurret.h"
@@ -18,6 +20,11 @@ ATanksPawn::ATanksPawn(const FObjectInitializer& ObjectInitializer)
 
 	PawnMovementComponent = CreateDefaultSubobject<UPawnMovementComponent, UFloatingPawnMovement>("PawnMovementComponent");
 	PawnMovementComponent->SetUpdatedComponent(RootComponent);
+
+	AttributeComponent = CreateDefaultSubobject<UTanksAttributeComponent>("AttributeComponent");
+
+	HealthWidgetComponent = CreateDefaultSubobject<UTanksHealthWidgetComponent>("HealthWidgetComponent");
+	HealthWidgetComponent->SetupAttachment(BoxCollisionComponent);
 }
 
 void ATanksPawn::BeginPlay()
@@ -25,6 +32,9 @@ void ATanksPawn::BeginPlay()
 	Super::BeginPlay();
 
 	LoadoutTurret();
+
+	OnTakeRadialDamage.AddDynamic(AttributeComponent, &UTanksAttributeComponent::OnTakeDamage);
+	AttributeComponent->OnHealthChanged.AddUFunction(HealthWidgetComponent, FName("SetNewHealthToWidget"));
 }
 
 void ATanksPawn::LoadoutTurret()
@@ -61,4 +71,25 @@ void ATanksPawn::MoveRight(float Value)
 		const FRotator NewRotation = FMath::RInterpTo(RootComponent->GetComponentRotation(), RightVector.Rotation(), GetWorld()->DeltaTimeSeconds, 2);
 		RootComponent->SetRelativeRotation(NewRotation);
 	}
+}
+
+void ATanksPawn::StartFire()
+{
+	if(IsValid(Turret))
+	{
+		Turret->StartFire();
+	}
+}
+
+void ATanksPawn::StopFire()
+{
+	if(IsValid(Turret))
+	{
+		Turret->StopFire();
+	}
+}
+
+void ATanksPawn::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, FVector Origin, FHitResult HitInfo, AController* InstigatedBy, AActor* DamageCauser)
+{
+	AttributeComponent->OnTakeDamage(DamagedActor, Damage, DamageType, Origin, HitInfo, InstigatedBy, DamageCauser);
 }
