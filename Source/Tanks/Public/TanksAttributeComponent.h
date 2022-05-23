@@ -6,7 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "TanksAttributeComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float, Value);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class TANKS_API UTanksAttributeComponent : public UActorComponent
@@ -34,6 +35,10 @@ public:
 	void Heal() { Health = MaxHealth; }
 
 public:
+	UPROPERTY(BlueprintAssignable, Category="Tank|Delegate")
+	FOnDeath OnDeath;
+
+	UPROPERTY(BlueprintAssignable, Category="Tank|Delegate")
 	FOnHealthChanged OnHealthChanged;
 
 protected:

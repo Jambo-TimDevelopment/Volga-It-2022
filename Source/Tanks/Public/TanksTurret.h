@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "../../../../../Program Files/Epic Games/UE_5.0/Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraComponent.h"
 #include "GameFramework/Actor.h"
 #include "TanksTurret.generated.h"
 
@@ -18,13 +19,15 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void StartFire()
-	{
-	}
+	virtual void StartFire();
 
-	virtual void StopFire()
-	{
-	}
+	virtual void StopFire();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFireStart();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFireStop();
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Components")

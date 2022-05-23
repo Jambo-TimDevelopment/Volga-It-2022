@@ -34,7 +34,8 @@ void ATanksPawn::BeginPlay()
 	LoadoutTurret();
 
 	OnTakeRadialDamage.AddDynamic(AttributeComponent, &UTanksAttributeComponent::OnTakeDamage);
-	AttributeComponent->OnHealthChanged.AddUFunction(HealthWidgetComponent, FName("SetNewHealthToWidget"));
+	AttributeComponent->OnHealthChanged.AddDynamic(HealthWidgetComponent, &UTanksHealthWidgetComponent::SetNewHealthToWidget);
+	AttributeComponent->OnDeath.AddDynamic(this, &ATanksPawn::OnDeath);
 }
 
 void ATanksPawn::LoadoutTurret()
@@ -89,7 +90,9 @@ void ATanksPawn::StopFire()
 	}
 }
 
-void ATanksPawn::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, FVector Origin, FHitResult HitInfo, AController* InstigatedBy, AActor* DamageCauser)
+void ATanksPawn::OnDeath()
 {
-	AttributeComponent->OnTakeDamage(DamagedActor, Damage, DamageType, Origin, HitInfo, InstigatedBy, DamageCauser);
+	HealthWidgetComponent->DestroyComponent();
+	AttributeComponent->OnDeath.RemoveAll(this);
+	AttributeComponent->OnHealthChanged.RemoveAll(this);
 }

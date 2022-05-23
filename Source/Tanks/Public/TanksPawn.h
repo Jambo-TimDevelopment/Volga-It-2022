@@ -32,7 +32,7 @@ protected:
 	virtual void StopFire();
 
 	UFUNCTION()
-	void OnTakeDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, FVector Origin, FHitResult HitInfo, class AController* InstigatedBy, AActor* DamageCauser);
+	void OnDeath();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scene Components")
@@ -52,7 +52,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	UTanksHealthWidgetComponent* HealthWidgetComponent;
-	
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
 	TSubclassOf<ATanksTurret> TurretClass;
 };

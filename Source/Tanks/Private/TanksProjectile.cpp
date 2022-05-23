@@ -23,8 +23,10 @@ void ATanksProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActo
 		return;
 	}
 
-	const TArray<AActor*> IgnoredActors;
-	UGameplayStatics::ApplyRadialDamage(GetWorld(), BaseDamage, GetActorForwardVector(), DamageRadius, UDamageType::StaticClass(), IgnoredActors, this, nullptr, false, ECC_Bullet);
-	this->Destroy();
+	TArray<AActor*> IgnoredActors;
+	IgnoredActors.Add(GetInstigator());
+	AActor* DamageCauser = GetInstigator();
+	UGameplayStatics::ApplyRadialDamage(GetWorld(), BaseDamage, GetActorLocation(), DamageRadius, UDamageType::StaticClass(), IgnoredActors, DamageCauser, nullptr, false, ECC_OverlapAll_Deprecated);
 
+	this->Destroy();
 }
