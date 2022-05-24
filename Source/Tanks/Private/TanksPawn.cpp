@@ -15,9 +15,6 @@ ATanksPawn::ATanksPawn(const FObjectInitializer& ObjectInitializer)
 	BoxCollisionComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
 	RootComponent = BoxCollisionComponent;
 
-	StaticMeshChassis = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshChassis");
-	StaticMeshChassis->SetupAttachment(RootComponent);
-
 	PawnMovementComponent = CreateDefaultSubobject<UPawnMovementComponent, UFloatingPawnMovement>("PawnMovementComponent");
 	PawnMovementComponent->SetUpdatedComponent(RootComponent);
 

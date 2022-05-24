@@ -24,9 +24,7 @@ void ATanksDestroyableWall::BeginPlay()
 
 void ATanksDestroyableWall::OnDeath()
 {
-	HealthWidgetComponent->DestroyComponent();
+	//HealthWidgetComponent->DestroyComponent();
 	AttributeComponent->OnDeath.RemoveAll(this);
 	AttributeComponent->OnHealthChanged.RemoveAll(this);
-
-	Destroy();
 }

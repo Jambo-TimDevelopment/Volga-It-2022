@@ -37,10 +37,7 @@ protected:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scene Components")
 	UBoxComponent* BoxCollisionComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scene Components")
-	UStaticMeshComponent* StaticMeshChassis;
-
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scene Components")
 	ATanksTurret* Turret;
 

@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Components/CapsuleComponent.h"
+#include "Field/FieldSystemActor.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "TanksProjectile.generated.h"
 
 UCLASS(Blueprintable, BlueprintType)
-class TANKS_API ATanksProjectile : public AActor
+class TANKS_API ATanksProjectile : public AFieldSystemActor
 {
 	GENERATED_BODY()
 
@@ -33,4 +34,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
 	float DamageRadius = 300;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
+	bool bInstigatorIgnoreDamage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
+	float ForceMultiply = 100.0f;
 };

@@ -3,18 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "Field/FieldSystemActor.h"
 #include "TanksDestroyableWall.generated.h"
 
 class UTanksHealthWidgetComponent;
 class UTanksAttributeComponent;
 UCLASS()
-class TANKS_API ATanksDestroyableWall : public AActor
+class TANKS_API ATanksDestroyableWall : public AFieldSystemActor
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
+
+public:
 	ATanksDestroyableWall();
 
 protected:
