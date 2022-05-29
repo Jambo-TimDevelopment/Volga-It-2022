@@ -30,7 +30,8 @@ void ATanksPawn::BeginPlay()
 
 	LoadoutTurret();
 
-	OnTakeRadialDamage.AddDynamic(AttributeComponent, &UTanksAttributeComponent::OnTakeDamage);
+	OnTakeRadialDamage.AddDynamic(AttributeComponent, &UTanksAttributeComponent::OnTakeRadialDamage);
+	OnTakePointDamage.AddDynamic(AttributeComponent, &UTanksAttributeComponent::OnTakePointDamage);
 	AttributeComponent->OnHealthChanged.AddDynamic(HealthWidgetComponent, &UTanksHealthWidgetComponent::SetNewHealthToWidget);
 	AttributeComponent->OnDeath.AddDynamic(this, &ATanksPawn::OnDeath);
 }

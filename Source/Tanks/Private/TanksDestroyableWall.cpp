@@ -17,14 +17,14 @@ void ATanksDestroyableWall::BeginPlay()
 {
 	Super::BeginPlay();
 
-	OnTakeRadialDamage.AddDynamic(AttributeComponent, &UTanksAttributeComponent::OnTakeDamage);
+	OnTakeRadialDamage.AddDynamic(AttributeComponent, &UTanksAttributeComponent::OnTakeRadialDamage);
+	OnTakePointDamage.AddDynamic(AttributeComponent, &UTanksAttributeComponent::OnTakePointDamage);
 	AttributeComponent->OnHealthChanged.AddDynamic(HealthWidgetComponent, &UTanksHealthWidgetComponent::SetNewHealthToWidget);
 	AttributeComponent->OnDeath.AddDynamic(this, &ATanksDestroyableWall::OnDeath);
 }
 
 void ATanksDestroyableWall::OnDeath()
 {
-	//HealthWidgetComponent->DestroyComponent();
 	AttributeComponent->OnDeath.RemoveAll(this);
 	AttributeComponent->OnHealthChanged.RemoveAll(this);
 }

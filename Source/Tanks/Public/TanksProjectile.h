@@ -17,6 +17,8 @@ class TANKS_API ATanksProjectile : public AFieldSystemActor
 public:
 	ATanksProjectile();
 
+	void SetBaseDamage(const float NewBaseDamage) { BaseDamage = NewBaseDamage; }
+
 private:
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -29,9 +31,6 @@ protected:
 	UCapsuleComponent* CapsuleComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
-	float BaseDamage = 30;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
 	float DamageRadius = 300;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
@@ -39,4 +38,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
 	float ForceMultiply = 100.0f;
+
+private:
+	float BaseDamage;
 };

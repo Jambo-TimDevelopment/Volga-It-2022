@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "../../../../../Program Files/Epic Games/UE_5.0/Engine/Plugins/FX/Niagara/Source/Niagara/Public/NiagaraComponent.h"
+#include "NiagaraComponent.h"
 #include "GameFramework/Actor.h"
 #include "TanksTurret.generated.h"
 
 class ATanksProjectile;
 
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Abstract)
 class TANKS_API ATanksTurret : public AActor
 {
 	GENERATED_BODY()
@@ -23,25 +23,50 @@ public:
 
 	virtual void StopFire();
 
+	/** Blueprint implementation for visual effects*/
 	UFUNCTION(BlueprintImplementableEvent)
-	void OnFireStart();
+	void OnFire(const FVector FireStart, const FVector FireEnd);
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnFireStop();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnDestroy();
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Components")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
 	UStaticMeshComponent* TurretMesh;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Parameters)
 	float RotationSpeed = 3;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Parameters)
 	int32 MaxAmmoCount = 100;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Parameters)
 	int32 AmmoCount;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Parameters)
+	float TimeToReload;
+
+	bool bCanStartFire = true;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Parameters)
+	float BarrelLength = 50;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Parameters)
 	TSubclassOf<ATanksProjectile> ProjectileClass;
+
+	UPROPERTY(EditDefaultsOnly, Category="Parameters|Fire")
+	int32 CountAmmoAtFire = 4;
+
+	UPROPERTY(EditDefaultsOnly, Category="Parameters|Fire")
+	float FireSpreadHealthAngle;
+
+	UPROPERTY(EditDefaultsOnly, Category="Parameters|Fire")
+	float FireDistance = 5000.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
+	float BaseDamage = 30;
+
+private:
+	UPROPERTY()
+	FTimerHandle FireCooldownTimer;
 };

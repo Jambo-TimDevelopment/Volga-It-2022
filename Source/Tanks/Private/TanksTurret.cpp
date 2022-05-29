@@ -24,10 +24,16 @@ void ATanksTurret::Tick(float DeltaTime)
 
 void ATanksTurret::StartFire()
 {
-	OnFireStart();
+	if (!bCanStartFire) return;
+
+	bCanStartFire = false;
+
+	GetWorld()->GetTimerManager().ClearTimer(FireCooldownTimer);
+	FTimerDelegate TimerDelegate;
+	TimerDelegate.BindLambda([&]() { if (IsValid(this)) bCanStartFire = true; });
+	GetWorld()->GetTimerManager().SetTimer(FireCooldownTimer, TimerDelegate, TimeToReload, false);
 }
 
 void ATanksTurret::StopFire()
 {
-	OnFireStop();
 }

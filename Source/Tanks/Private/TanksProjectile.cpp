@@ -29,7 +29,5 @@ void ATanksProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActo
 	AActor* DamageCauser = GetInstigator();
 	UGameplayStatics::ApplyRadialDamage(GetWorld(), BaseDamage, GetActorLocation(), DamageRadius, UDamageType::StaticClass(), IgnoredActors, DamageCauser, nullptr, false, ECC_OverlapAll_Deprecated);
 
-	if (OverlappedComp->IsSimulatingPhysics()) OverlappedComp->AddForceAtLocation(GetVelocity() * ForceMultiply, GetActorLocation());
-
 	this->Destroy();
 }

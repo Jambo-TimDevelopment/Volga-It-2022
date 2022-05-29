@@ -23,7 +23,12 @@ void UTanksAttributeComponent::TakeDamage(float Damage)
 	}
 }
 
-void UTanksAttributeComponent::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, FVector Origin, FHitResult HitInfo, AController* InstigatedBy, AActor* DamageCauser)
+void UTanksAttributeComponent::OnTakeRadialDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, FVector Origin, FHitResult HitInfo, AController* InstigatedBy, AActor* DamageCauser)
+{
+	TakeDamage(Damage);
+}
+
+void UTanksAttributeComponent::OnTakePointDamage(AActor* DamagedActor, float Damage, AController* InstigatedBy, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector ShotFromDirection, const UDamageType* DamageType, AActor* DamageCauser)
 {
 	TakeDamage(Damage);
 }

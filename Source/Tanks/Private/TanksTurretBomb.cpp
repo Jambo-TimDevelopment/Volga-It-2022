@@ -5,15 +5,19 @@
 
 void ATanksTurretBomb::StartFire()
 {
+	if (!bCanStartFire) return;
+
 	Super::StartFire();
 
 	const FRotator SpawnRotation = GetActorRotation();
-	const FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * 50;
+	const FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * BarrelLength;
 	FActorSpawnParameters ActorSpawnParams;
 	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	ActorSpawnParams.Instigator = GetInstigator();
 
-	GetWorld()->SpawnActor<ATanksProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+	ATanksProjectile* Projectile = GetWorld()->SpawnActor<ATanksProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+	Projectile->SetBaseDamage(BaseDamage); 
+	OnFire(SpawnLocation, SpawnLocation);
 }
 
 void ATanksTurretBomb::StopFire()

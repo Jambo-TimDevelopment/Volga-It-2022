@@ -4,10 +4,27 @@
 #include "TanksHealthWidgetComponent.h"
 #include "TanksHealthWidget.h"
 
+void UTanksHealthWidgetComponent::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (!bAlwaysVisible && IsValid(GetWidget())) GetWidget()->SetVisibility(ESlateVisibility::Hidden);
+}
+
 void UTanksHealthWidgetComponent::SetNewHealthToWidget(float NewHealth)
 {
-	if(Cast<UTanksHealthWidget>(GetWidget()))
+	if (!Cast<UTanksHealthWidget>(GetWidget()))
 	{
-		Cast<UTanksHealthWidget>(GetWidget())->SetHealth(NewHealth);
+		return;
+	}
+
+	Cast<UTanksHealthWidget>(GetWidget())->SetHealth(NewHealth);
+	if (!bAlwaysVisible)
+	{
+		GetWidget()->SetVisibility(ESlateVisibility::Visible);
+		GetWorld()->GetTimerManager().ClearTimer(HideCooldownTimer);
+		FTimerDelegate TimerDelegate;
+		TimerDelegate.BindLambda([&]() { if (IsValid(this)) this->GetWidget()->SetVisibility(ESlateVisibility::Hidden); });
+		GetWorld()->GetTimerManager().SetTimer(HideCooldownTimer, TimerDelegate, HideCooldownTime, false);
 	}
 }
