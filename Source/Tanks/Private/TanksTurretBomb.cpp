@@ -3,11 +3,11 @@
 #include "TanksTurretBomb.h"
 #include "TanksProjectile.h"
 
-void ATanksTurretBomb::StartFire()
+void ATanksTurretBomb::Fire()
 {
 	if (!bCanStartFire) return;
 
-	Super::StartFire();
+	Super::Fire();
 
 	const FRotator SpawnRotation = GetActorRotation();
 	const FVector SpawnLocation = GetActorLocation() + GetActorForwardVector() * BarrelLength;
@@ -18,8 +18,4 @@ void ATanksTurretBomb::StartFire()
 	ATanksProjectile* Projectile = GetWorld()->SpawnActor<ATanksProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
 	if (IsValid(Projectile)) Projectile->SetBaseDamage(BaseDamage);
 	OnFire(SpawnLocation, SpawnLocation);
-}
-
-void ATanksTurretBomb::StopFire()
-{
 }

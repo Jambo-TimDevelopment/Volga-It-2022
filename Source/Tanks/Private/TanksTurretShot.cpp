@@ -5,11 +5,11 @@
 #include "Tanks.h"
 #include "Kismet/GameplayStatics.h"
 
-void ATanksTurretShot::StartFire()
+void ATanksTurretShot::Fire()
 {
 	if (!bCanStartFire) return;
 
-	Super::StartFire();
+	Super::Fire();
 
 	for (int BulletIndex = 0; BulletIndex < CountAmmoAtFire; ++BulletIndex)
 	{
@@ -32,9 +32,4 @@ void ATanksTurretShot::StartFire()
 
 		OnFire(ShotStart, ShotEnd);
 	}
-}
-
-void ATanksTurretShot::StopFire()
-{
-	Super::StopFire();
 }

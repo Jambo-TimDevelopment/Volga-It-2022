@@ -26,8 +26,7 @@ void ATanksPlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	InputComponent->BindAxis("MoveForward", this, &ATanksPlayerPawn::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ATanksPlayerPawn::MoveRight);
 	InputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	InputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ATanksPlayerPawn::StartFire);
-	InputComponent->BindAction("Fire", EInputEvent::IE_Released, this, &ATanksPlayerPawn::StopFire);
+	InputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ATanksPlayerPawn::Fire);
 }
 
 void ATanksPlayerPawn::MoveForward(float Value)
@@ -40,12 +39,7 @@ void ATanksPlayerPawn::MoveRight(float Value)
 	Super::MoveRight(Value);
 }
 
-void ATanksPlayerPawn::StartFire()
+void ATanksPlayerPawn::Fire()
 {
-	Super::StartFire();
-}
-
-void ATanksPlayerPawn::StopFire()
-{
-	Super::StopFire();
+	Super::Fire();
 }

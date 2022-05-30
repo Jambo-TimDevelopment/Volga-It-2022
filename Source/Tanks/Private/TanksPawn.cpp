@@ -11,6 +11,8 @@
 ATanksPawn::ATanksPawn(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
+	PrimaryActorTick.bCanEverTick = true;
+
 	BoxCollisionComponent = CreateDefaultSubobject<UBoxComponent>("StaticMeshComponent");
 	BoxCollisionComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
 	RootComponent = BoxCollisionComponent;
@@ -72,19 +74,11 @@ void ATanksPawn::MoveRight(float Value)
 	}
 }
 
-void ATanksPawn::StartFire()
+void ATanksPawn::Fire()
 {
-	if(IsValid(Turret))
+	if (IsValid(Turret))
 	{
-		Turret->StartFire();
-	}
-}
-
-void ATanksPawn::StopFire()
-{
-	if(IsValid(Turret))
-	{
-		Turret->StopFire();
+		Turret->Fire();
 	}
 }
 

@@ -28,8 +28,8 @@ protected:
 	virtual void MoveForward(float Value);
 	virtual void MoveRight(float Value);
 
-	virtual void StartFire();
-	virtual void StopFire();
+	UFUNCTION()
+	virtual void Fire();
 
 	UFUNCTION()
 	void OnDeath();
@@ -37,10 +37,12 @@ protected:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scene Components")
 	UBoxComponent* BoxCollisionComponent;
-	
+
+public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scene Components")
 	ATanksTurret* Turret;
 
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	UPawnMovementComponent* PawnMovementComponent;
 

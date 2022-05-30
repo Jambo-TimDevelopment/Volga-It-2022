@@ -5,11 +5,11 @@
 #include "Tanks.h"
 #include "Kismet/GameplayStatics.h"
 
-void ATanksTurretBurst::StartFire()
+void ATanksTurretBurst::Fire()
 {
 	if (!bCanStartFire) return;
 
-	Super::StartFire();
+	Super::Fire();
 
 	CurrentCountAmmoAtFire = CountAmmoAtFire;
 	GetWorld()->GetTimerManager().ClearTimer(BurstCooldownTimer);
@@ -17,11 +17,6 @@ void ATanksTurretBurst::StartFire()
 	MakeShot();
 
 	GetWorld()->GetTimerManager().SetTimer(BurstCooldownTimer, this, &ATanksTurretBurst::MakeShot, TimeToReloadBurst, false);
-}
-
-void ATanksTurretBurst::StopFire()
-{
-	Super::StopFire();
 }
 
 void ATanksTurretBurst::MakeShot()

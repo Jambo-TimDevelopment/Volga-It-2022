@@ -15,9 +15,7 @@ class TANKS_API ATanksTurretBurst : public ATanksTurret
 	GENERATED_BODY()
 
 public:
-	virtual void StartFire() override;
-
-	virtual void StopFire() override;
+	virtual void Fire() override;
 
 private:
 	void MakeShot();
