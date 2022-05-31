@@ -95,6 +95,8 @@ void ATanksAIPawn::SetCurrentAIState(EAIState NewState)
 
 void ATanksAIPawn::GenerateNewSearchPoint() const
 {
+	if (!IsValid(Turret)) return;
+
 	const float Yaw = FMath::FRandRange(-180.f, 180.f);
 	const FRotator NewPointFRotator(0.0f, Yaw, 0.0f);
 	Turret->SetTargetTurretRotation(NewPointFRotator);

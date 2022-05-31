@@ -14,7 +14,7 @@ enum class EAIState : uint8
 };
 
 /** Base pawn for AI */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class TANKS_API ATanksAIPawn : public ATanksPawn
 {
 	GENERATED_BODY()

@@ -38,6 +38,14 @@ void ATanksPawn::BeginPlay()
 	AttributeComponent->OnDeath.AddDynamic(this, &ATanksPawn::OnDeath);
 }
 
+void ATanksPawn::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	AttributeComponent->OnDeath.RemoveAll(this);
+	AttributeComponent->OnHealthChanged.RemoveAll(this);
+}
+
 void ATanksPawn::LoadoutTurret()
 {
 	if (!IsValid(TurretClass))
