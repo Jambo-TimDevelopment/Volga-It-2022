@@ -11,6 +11,13 @@ void UTanksHealthWidgetComponent::BeginPlay()
 	if (!bAlwaysVisible && IsValid(GetWidget())) GetWidget()->SetVisibility(ESlateVisibility::Hidden);
 }
 
+void UTanksHealthWidgetComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	GetWorld()->GetTimerManager().ClearTimer(HideCooldownTimer);
+
+	Super::EndPlay(EndPlayReason);
+}
+
 void UTanksHealthWidgetComponent::SetNewHealthToWidget(float NewHealth)
 {
 	if (!Cast<UTanksHealthWidget>(GetWidget()))

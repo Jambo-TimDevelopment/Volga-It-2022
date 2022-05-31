@@ -17,6 +17,8 @@ class TANKS_API UTanksHealthWidgetComponent : public UWidgetComponent
 public:
 	virtual void BeginPlay() override;
 
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	
 	UFUNCTION()
 	void SetNewHealthToWidget(float NewHealth);
 
