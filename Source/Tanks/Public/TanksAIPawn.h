@@ -26,11 +26,16 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	virtual FVector GetPawnViewLocation() const override;
+
+	virtual FRotator GetViewRotation() const override;
+
+	void SetCurrentTarget(AActor* NewTarget);
+
 private:
 	void SearchingMovement(float DeltaTime);
 	void FiringMovement(float DeltaTime);
 
-	void SetCurrentTarget(ATanksPawn* NewTarget);
 	void SetCurrentAIState(EAIState NewState);
 
 	void GenerateNewSearchPoint() const;

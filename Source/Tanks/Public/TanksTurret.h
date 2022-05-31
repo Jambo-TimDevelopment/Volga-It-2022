@@ -31,9 +31,6 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void OnDestroy();
 
-	UFUNCTION(BlueprintCallable)
-	ATanksPawn* OnSearching(float Length, float HealthConeAngleWidth, int32 SearchingIntensive);
-
 	void SetTargetTurretRotation(FRotator NewTargetRotation) { CurrentTargetTurretRotation = NewTargetRotation; }
 
 	UPROPERTY()

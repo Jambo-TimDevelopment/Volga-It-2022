@@ -95,4 +95,5 @@ void ATanksPawn::OnDeath()
 	HealthWidgetComponent->DestroyComponent();
 	AttributeComponent->OnDeath.RemoveAll(this);
 	AttributeComponent->OnHealthChanged.RemoveAll(this);
+	GetController()->StopMovement();
 }

@@ -4,6 +4,7 @@
 #include "TanksAIPawn.h"
 
 #include "TanksAttributeComponent.h"
+#include "TanksPlayerPawn.h"
 #include "TanksTurret.h"
 
 ATanksAIPawn::ATanksAIPawn(const FObjectInitializer& ObjectInitializer)
@@ -39,20 +40,28 @@ void ATanksAIPawn::Tick(float DeltaTime)
 	}
 }
 
-void ATanksAIPawn::SetCurrentTarget(ATanksPawn* NewTarget)
+FVector ATanksAIPawn::GetPawnViewLocation() const
 {
-	CurrentTarget = NewTarget;
-	const EAIState NewAIState = IsValid(NewTarget) ? EAIState::Firing : EAIState::Searching;
-	SetCurrentAIState(NewAIState);
+	return Super::GetPawnViewLocation();
+}
+
+FRotator ATanksAIPawn::GetViewRotation() const
+{
+	return Turret->GetActorRotation();
+}
+
+void ATanksAIPawn::SetCurrentTarget(AActor* NewTarget)
+{
+	CurrentTarget = Cast<ATanksPlayerPawn>(NewTarget);
+	if (CurrentTarget.IsValid())
+	{
+		const EAIState NewAIState = IsValid(NewTarget) ? EAIState::Firing : EAIState::Searching;
+		SetCurrentAIState(NewAIState);
+	}
 }
 
 void ATanksAIPawn::SearchingMovement(float DeltaTime)
 {
-	ATanksPawn* SearchingTarget = Turret->OnSearching(MaxLengthToTargetInSearching, MaxHealthConeAngleForSearching, SearchingIntensive);
-	if (IsValid(SearchingTarget))
-	{
-		SetCurrentTarget(SearchingTarget);
-	}
 }
 
 void ATanksAIPawn::FiringMovement(float DeltaTime)

@@ -43,32 +43,6 @@ void ATanksTurret::Fire()
 	GetWorld()->GetTimerManager().SetTimer(FireCooldownTimer, this, &ATanksTurret::ResetCooldownFire, TimeToReload, false);
 }
 
-
-ATanksPawn* ATanksTurret::OnSearching(float Length, float HealthConeAngleWidth, int32 SearchingIntensive)
-{
-	for (int Index = 0; Index < SearchingIntensive; ++Index)
-	{
-		FHitResult OutHit;
-		FVector ShotStart = GetActorLocation() + GetActorForwardVector() * BarrelLength;
-		FVector FireDirection = FMath::VRandCone(GetActorForwardVector(), HealthConeAngleWidth);
-		FireDirection.Z = 0;
-		FVector ShotEnd = ShotStart + Length * FireDirection;
-		FCollisionQueryParams Params;
-		Params.AddIgnoredActor(this);
-		Params.AddIgnoredActor(GetInstigator());
-		FCollisionResponseParams ResponseParam;
-
-		if (GetWorld()->LineTraceSingleByChannel(OutHit, ShotStart, ShotEnd, ECC_Bullet, Params, ResponseParam))
-		{
-			ATanksPlayerPawn* Pawn = Cast<ATanksPlayerPawn>(OutHit.GetActor());
-			if (IsValid(Pawn) && Pawn->AttributeComponent->IsLive())
-				return StaticCast<ATanksPawn*>(Pawn);
-		}
-	}
-
-	return nullptr;
-}
-
 void ATanksTurret::ResetCooldownFire()
 {
 	if (IsValid(this))
