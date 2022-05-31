@@ -44,6 +44,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="Paramaters|Firing", meta = (ClampMin = 0.0f, UIMin = 0.0f))
 	float MaxLengthToTargetInFiring = 3000.0f;
 
+	UPROPERTY(EditDefaultsOnly, Category="Paramaters|Firing")
+	float MaxFiringLeftAngle = -180.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category="Paramaters|Firing")
+	float MaxFiringRightAngle = 180.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category="Paramaters|Firing")
+	bool bClampFiringDirection = false;
+	
 	UPROPERTY(EditDefaultsOnly, Category="Paramaters|Searching", meta = (ClampMin = 0.0f, UIMin = 0.0f))
 	float TimeToSearchNewPoint = 3.0f;
 

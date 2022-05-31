@@ -73,14 +73,12 @@ void ATanksAIPawn::FiringMovement(float DeltaTime)
 	}
 
 	const FVector TargetDirection = CurrentTarget->GetActorLocation() - GetActorLocation();
-	const float LengthToTarget = TargetDirection.Length();
-	if (LengthToTarget > MaxLengthToTargetInFiring)
-	{
-		SetCurrentAIState(EAIState::Searching);
-		return;
-	}
 
-	const FRotator TargetRotation = TargetDirection.Rotation();
+	FRotator TargetRotation = TargetDirection.Rotation();
+	if(bClampFiringDirection)
+	{
+		TargetRotation.Yaw = FMath::Clamp(TargetRotation.Yaw, GetActorRotation().Yaw + MaxFiringLeftAngle, GetActorRotation().Yaw + MaxFiringRightAngle);
+	}
 	Turret->SetTargetTurretRotation(TargetRotation);
 }
 
