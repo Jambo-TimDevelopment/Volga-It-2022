@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "TanksTurret.generated.h"
 
+class ATanksPawn;
 class ATanksProjectile;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCanFire);
@@ -31,7 +32,7 @@ public:
 	void OnDestroy();
 
 	UFUNCTION(BlueprintCallable)
-	AActor* OnSearching(float Length, float HealthConeAngleWidth, int32 SearchingIntensive);
+	ATanksPawn* OnSearching(float Length, float HealthConeAngleWidth, int32 SearchingIntensive);
 
 	void SetTargetTurretRotation(FRotator NewTargetRotation) { CurrentTargetTurretRotation = NewTargetRotation; }
 

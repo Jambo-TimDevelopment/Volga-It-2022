@@ -42,16 +42,16 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scene Components")
 	ATanksTurret* Turret;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
+	UTanksAttributeComponent* AttributeComponent;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	UPawnMovementComponent* PawnMovementComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
-	UTanksAttributeComponent* AttributeComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	UTanksHealthWidgetComponent* HealthWidgetComponent;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Parameters")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parameters")
 	TSubclassOf<ATanksTurret> TurretClass;
 };

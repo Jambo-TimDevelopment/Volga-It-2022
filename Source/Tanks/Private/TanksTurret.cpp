@@ -4,6 +4,7 @@
 #include "TanksTurret.h"
 
 #include "Tanks.h"
+#include "TanksAttributeComponent.h"
 #include "TanksPlayerPawn.h"
 
 ATanksTurret::ATanksTurret()
@@ -38,12 +39,12 @@ void ATanksTurret::Fire()
 	bCanStartFire = false;
 
 	GetWorld()->GetTimerManager().ClearTimer(FireCooldownTimer);
-	
+
 	GetWorld()->GetTimerManager().SetTimer(FireCooldownTimer, this, &ATanksTurret::ResetCooldownFire, TimeToReload, false);
 }
 
 
-AActor* ATanksTurret::OnSearching(float Length, float HealthConeAngleWidth, int32 SearchingIntensive)
+ATanksPawn* ATanksTurret::OnSearching(float Length, float HealthConeAngleWidth, int32 SearchingIntensive)
 {
 	for (int Index = 0; Index < SearchingIntensive; ++Index)
 	{
@@ -59,8 +60,9 @@ AActor* ATanksTurret::OnSearching(float Length, float HealthConeAngleWidth, int3
 
 		if (GetWorld()->LineTraceSingleByChannel(OutHit, ShotStart, ShotEnd, ECC_Bullet, Params, ResponseParam))
 		{
-			if (Cast<ATanksPlayerPawn>(OutHit.GetActor()))
-				return OutHit.GetActor();
+			ATanksPlayerPawn* Pawn = Cast<ATanksPlayerPawn>(OutHit.GetActor());
+			if (IsValid(Pawn) && Pawn->AttributeComponent->IsLive())
+				return StaticCast<ATanksPawn*>(Pawn);
 		}
 	}
 

@@ -10,7 +10,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float, Value);
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(BlueprintType, Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class TANKS_API UTanksAttributeComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -24,7 +24,7 @@ public:
 	float GetHealthPercent() const { return Health / MaxHealth; }
 
 	UFUNCTION(BlueprintCallable)
-	bool IsLive() { return FMath::IsNearlyZero(Health); }
+	bool IsLive() { return !FMath::IsNearlyZero(Health); }
 
 	UFUNCTION(BlueprintCallable)
 	void TakeDamage(float Damage);

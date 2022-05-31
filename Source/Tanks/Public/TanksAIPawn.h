@@ -30,7 +30,7 @@ private:
 	void SearchingMovement(float DeltaTime);
 	void FiringMovement(float DeltaTime);
 
-	void SetCurrentTarget(AActor* NewTarget);
+	void SetCurrentTarget(ATanksPawn* NewTarget);
 	void SetCurrentAIState(EAIState NewState);
 
 	void GenerateNewSearchPoint() const;
@@ -57,5 +57,5 @@ private:
 	UPROPERTY()
 	FTimerHandle SearchNewPointTimer;
 
-	TWeakObjectPtr<AActor> CurrentTarget;
+	TWeakObjectPtr<ATanksPawn> CurrentTarget;
 };

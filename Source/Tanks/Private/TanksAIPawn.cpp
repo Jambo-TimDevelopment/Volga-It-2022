@@ -3,6 +3,7 @@
 
 #include "TanksAIPawn.h"
 
+#include "TanksAttributeComponent.h"
 #include "TanksTurret.h"
 
 ATanksAIPawn::ATanksAIPawn(const FObjectInitializer& ObjectInitializer)
@@ -38,7 +39,7 @@ void ATanksAIPawn::Tick(float DeltaTime)
 	}
 }
 
-void ATanksAIPawn::SetCurrentTarget(AActor* NewTarget)
+void ATanksAIPawn::SetCurrentTarget(ATanksPawn* NewTarget)
 {
 	CurrentTarget = NewTarget;
 	const EAIState NewAIState = IsValid(NewTarget) ? EAIState::Firing : EAIState::Searching;
@@ -47,7 +48,7 @@ void ATanksAIPawn::SetCurrentTarget(AActor* NewTarget)
 
 void ATanksAIPawn::SearchingMovement(float DeltaTime)
 {
-	AActor* SearchingTarget = Turret->OnSearching(MaxLengthToTargetInSearching, MaxHealthConeAngleForSearching, SearchingIntensive);
+	ATanksPawn* SearchingTarget = Turret->OnSearching(MaxLengthToTargetInSearching, MaxHealthConeAngleForSearching, SearchingIntensive);
 	if (IsValid(SearchingTarget))
 	{
 		SetCurrentTarget(SearchingTarget);
@@ -56,7 +57,7 @@ void ATanksAIPawn::SearchingMovement(float DeltaTime)
 
 void ATanksAIPawn::FiringMovement(float DeltaTime)
 {
-	if (!CurrentTarget.IsValid())
+	if (!CurrentTarget.IsValid() || !CurrentTarget->AttributeComponent->IsLive())
 	{
 		SetCurrentAIState(EAIState::Searching);
 		return;

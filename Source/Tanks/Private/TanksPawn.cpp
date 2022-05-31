@@ -52,7 +52,7 @@ void ATanksPawn::LoadoutTurret()
 
 void ATanksPawn::MoveForward(float Value)
 {
-	if (!FMath::IsNearlyZero(Value, 1e-6f))
+	if (!FMath::IsNearlyZero(Value, 1e-6f) && AttributeComponent->IsLive())
 	{
 		const FRotator YawRotator(0.0f, GetControlRotation().Yaw, 0.0f);
 		const FVector ForwardVector = YawRotator.RotateVector(FVector::ForwardVector * Value);
@@ -64,7 +64,7 @@ void ATanksPawn::MoveForward(float Value)
 
 void ATanksPawn::MoveRight(float Value)
 {
-	if (!FMath::IsNearlyZero(Value, 1e-6f))
+	if (!FMath::IsNearlyZero(Value, 1e-6f) && AttributeComponent->IsLive())
 	{
 		const FRotator YawRotator(0.0f, GetControlRotation().Yaw, 0.0f);
 		const FVector RightVector = YawRotator.RotateVector(FVector::RightVector * Value);
@@ -76,7 +76,7 @@ void ATanksPawn::MoveRight(float Value)
 
 void ATanksPawn::Fire()
 {
-	if (IsValid(Turret))
+	if (IsValid(Turret) && AttributeComponent->IsLive())
 	{
 		Turret->Fire();
 	}
